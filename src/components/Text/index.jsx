@@ -15,6 +15,12 @@ const Text = () => {
     notesDispatch({ type: "ADD_NOTE" });
     notesDispatch({ type: "CLEAR_NOTES" });
   };
+
+  const pinnedNotes =
+    notes?.length > 0 && notes.filter(({ isPinned }) => isPinned);
+  const otherNotes =
+    notes?.length > 0 && notes.filter(({ isPinned }) => !isPinned);
+
   console.log(notes, "notes");
 
   return (
@@ -43,9 +49,38 @@ const Text = () => {
           Add
         </button>
       </div>
+      {pinnedNotes?.length > 0 && (
+        <>
+          <h3 className="mt-14">Pinned Notes</h3>
+
+          <div className="flex gap-4 flex-wrap">
+            {pinnedNotes?.length > 0 &&
+              pinnedNotes.map(({ id, title, text, isPinned }) => (
+                <ShowNotes
+                  key={id}
+                  id={id}
+                  title={title}
+                  text={text}
+                  isPinned={isPinned}
+                />
+              ))}
+          </div>
+        </>
+      )}
+
+      {pinnedNotes?.length > 0 && <h3>Other Notes</h3>}
+
       <div className="flex gap-4 flex-wrap">
-        {notes?.length > 0 &&
-          notes.map(({ id, title, text, isPinned }) => <ShowNotes key={id} id={id} title={title} text={text} isPinned={isPinned} />)}
+        {otherNotes?.length > 0 &&
+          otherNotes.map(({ id, title, text, isPinned }) => (
+            <ShowNotes
+              key={id}
+              id={id}
+              title={title}
+              text={text}
+              isPinned={isPinned}
+            />
+          ))}
       </div>
     </div>
   );
