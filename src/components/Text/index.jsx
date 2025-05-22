@@ -1,19 +1,8 @@
-import { useReducer } from "react";
-import notesReducer from "../../Reducers/notesReducer";
 import ShowNotes from "../ShowNotes";
+import { useNotes } from "../../context/notes-context";
 
 const Text = () => {
-  const initialState = {
-    title: "",
-    text: "",
-    notes: [],
-  };
-
-  const [{ title, text, notes }, notesDispatch] = useReducer(
-    notesReducer,
-    initialState
-  );
-
+  const { title, text, notes, notesDispatch } = useNotes();
   const onTitleChange = (e) => {
     notesDispatch({ type: "TITLE", payload: e.target.value });
   };
@@ -34,14 +23,14 @@ const Text = () => {
         <input
           value={title}
           onChange={onTitleChange}
-          className=""
+          className="focus:outline-none border-b-0 p-1"
           type="text"
           placeholder="Enter Title"
         />
         <textarea
           value={text}
           onChange={onTextChange}
-          className=""
+          className="focus:outline-none border-b-0 p-1"
           name=""
           id=""
           placeholder="Enter Text"
@@ -54,7 +43,10 @@ const Text = () => {
           Add
         </button>
       </div>
-      <ShowNotes notes={notes} />
+      <div className="flex gap-4 flex-wrap">
+        {notes?.length > 0 &&
+          notes.map(({ id, title, text, isPinned }) => <ShowNotes key={id} id={id} title={title} text={text} isPinned={isPinned} />)}
+      </div>
     </div>
   );
 };
