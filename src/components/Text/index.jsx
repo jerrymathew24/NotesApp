@@ -24,8 +24,8 @@ const Text = () => {
   console.log(notes, "notes");
 
   return (
-    <div>
-      <div className="flex flex-col w-[400px] relative border-1 border-gray-500 rounded-md p-5 mt-5">
+    <div className="flex flex-col justify-center w-screen mt-7">
+      <div className="flex flex-col self-center w-[600px] relative border-1 border-gray-500 rounded-md p-5 mt-5">
         <input
           value={title}
           onChange={onTitleChange}
@@ -36,7 +36,7 @@ const Text = () => {
         <textarea
           value={text}
           onChange={onTextChange}
-          className="focus:outline-none border-b-0 p-1"
+          className="focus:outline-none border-b-0 p-1 h-[60px]"
           name=""
           id=""
           placeholder="Enter Text"
@@ -49,13 +49,33 @@ const Text = () => {
           Add
         </button>
       </div>
-      {pinnedNotes?.length > 0 && (
-        <>
-          <h3 className="mt-14">Pinned Notes</h3>
+      <div className="mt-12 ml-10">
+        {pinnedNotes?.length > 0 && (
+          <div className="">
+            <h2 className="m-1 text-xl">Pinned Notes</h2>
 
-          <div className="flex gap-4 flex-wrap">
-            {pinnedNotes?.length > 0 &&
-              pinnedNotes.map(({ id, title, text, isPinned }) => (
+            <div className="flex gap-4 flex-wrap">
+              {pinnedNotes?.length > 0 &&
+                pinnedNotes.map(({ id, title, text, isPinned }) => (
+                  <ShowNotes
+                    key={id}
+                    id={id}
+                    title={title}
+                    text={text}
+                    isPinned={isPinned}
+                  />
+                ))}
+            </div>
+          </div>
+        )}
+        <div className="">
+          {pinnedNotes?.length > 0 && (
+            <h2 className="m-1 mt-5 text-xl">Other Notes</h2>
+          )}
+
+          <div className="flex gap-5 flex-wrap">
+            {otherNotes?.length > 0 &&
+              otherNotes.map(({ id, title, text, isPinned }) => (
                 <ShowNotes
                   key={id}
                   id={id}
@@ -65,22 +85,7 @@ const Text = () => {
                 />
               ))}
           </div>
-        </>
-      )}
-
-      {pinnedNotes?.length > 0 && <h3>Other Notes</h3>}
-
-      <div className="flex gap-4 flex-wrap">
-        {otherNotes?.length > 0 &&
-          otherNotes.map(({ id, title, text, isPinned }) => (
-            <ShowNotes
-              key={id}
-              id={id}
-              title={title}
-              text={text}
-              isPinned={isPinned}
-            />
-          ))}
+        </div>
       </div>
     </div>
   );
