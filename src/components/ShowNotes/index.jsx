@@ -1,7 +1,10 @@
 import { useNotes } from "../../context/notes-context";
+import { findNotesInArchive } from "../../utils/findNotesInArchive";
 
 function ShowNotes({ title, text, id, isPinned }) {
-  const { notesDispatch } = useNotes();
+  const { notesDispatch, archive } = useNotes();
+
+  const isNotesInArchive = findNotesInArchive(archive, id);
 
   const onPinClick = (id) => {
     !isPinned
@@ -10,8 +13,10 @@ function ShowNotes({ title, text, id, isPinned }) {
   };
 
   const onArchiveClick = (id) => {
-    notesDispatch({ type: "ARCHIVE", payload: { id } });
-  }
+    !isNotesInArchive
+      ? notesDispatch({ type: "ADD_TO_ARCHIVE", payload: { id } })
+      : notesDispatch({ type: "REMOVE_FROM_ARCHIVE", payload: { id } });
+  };
 
   return (
     <div
@@ -32,7 +37,13 @@ function ShowNotes({ title, text, id, isPinned }) {
         <p>{text}</p>
         <div className="">
           <button className="m-1" onClick={() => onArchiveClick(id)}>
-            <span className="material-icons-outlined">archive</span>
+            <span
+              className={
+                isNotesInArchive ? "material-icons" : "material-icons-outlined"
+              }
+            >
+              archive
+            </span>
           </button>
           <button className="m-1">
             <span className="material-icons-outlined">delete_outline</span>

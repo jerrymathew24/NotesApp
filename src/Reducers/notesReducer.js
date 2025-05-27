@@ -44,12 +44,18 @@ const notesReducer = (state, action) => {
             : note
         ),
       };
-    case "ARCHIVE":
+    case "ADD_TO_ARCHIVE":
       return {
         ...state,
         archive:[...state.archive, state.notes.find(({id}) => id === action.payload.id)],
         notes: state.notes.filter( ({id}) => id !== action.payload.id)
       }
+      case "REMOVE_FROM_ARCHIVE":
+        return {
+          ...state,
+          notes: [...state.notes, state.archive.find(({id}) => id === action.payload.id)],
+          archive: state.archive.filter(({id}) => id !== action.payload.id)
+        }
     default:
       return state;
   }
