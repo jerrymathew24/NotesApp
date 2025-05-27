@@ -9,6 +9,10 @@ function ShowNotes({ title, text, id, isPinned }) {
       : notesDispatch({ type: "UNPIN", payload: { id } });
   };
 
+  const onArchiveClick = (id) => {
+    notesDispatch({ type: "ARCHIVE", payload: { id } });
+  }
+
   return (
     <div
       key={id}
@@ -27,7 +31,7 @@ function ShowNotes({ title, text, id, isPinned }) {
       <div className="flex justify-between">
         <p>{text}</p>
         <div className="">
-          <button className="m-1">
+          <button className="m-1" onClick={() => onArchiveClick(id)}>
             <span className="material-icons-outlined">archive</span>
           </button>
           <button className="m-1">
