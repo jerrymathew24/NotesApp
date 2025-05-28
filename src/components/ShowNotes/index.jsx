@@ -1,10 +1,12 @@
 import { useNotes } from "../../context/notes-context";
 import { findNotesInArchive } from "../../utils/findNotesInArchive";
+import { findNotesInImportant } from "../../utils/findNotesInImportant";
 
 function ShowNotes({ title, text, id, isPinned }) {
-  const { notesDispatch, archive } = useNotes();
+  const { notesDispatch, archive, important } = useNotes();
 
   const isNotesInArchive = findNotesInArchive(archive, id);
+  const isNotesInImportant = findNotesInImportant(important, id);
 
   const onPinClick = (id) => {
     !isPinned
@@ -18,6 +20,12 @@ function ShowNotes({ title, text, id, isPinned }) {
       : notesDispatch({ type: "REMOVE_FROM_ARCHIVE", payload: { id } });
   };
 
+  const onImportantClick = (id) => {
+    !isNotesInImportant
+      ? notesDispatch({ type: "ADD_TO_IMPORTANT", payload: { id } })
+      : notesDispatch({ type: "REMOVE_FROM_IMPORTANT", payload: { id } });
+  };
+
   return (
     <div
       key={id}
@@ -25,26 +33,46 @@ function ShowNotes({ title, text, id, isPinned }) {
     >
       <div className="flex justify-between">
         <span className="text-xl font-bold">{title}</span>
-        <button className="m-1" onClick={() => onPinClick(id)}>
-          <span
-            className={isPinned ? "material-icons" : "material-icons-outlined"}
-          >
-            push_pin
-          </span>
-        </button>
-      </div>
-      <div className="flex justify-between">
-        <p>{text}</p>
-        <div className="">
-          <button className="m-1" onClick={() => onArchiveClick(id)}>
+        {!isNotesInArchive && !isNotesInImportant ? (
+          <button className="m-1" onClick={() => onPinClick(id)}>
             <span
               className={
-                isNotesInArchive ? "material-icons" : "material-icons-outlined"
+                isPinned ? "material-icons" : "material-icons-outlined"
               }
             >
-              archive
+              push_pin
             </span>
           </button>
+        ) : null}
+      </div>
+
+      <div className="flex justify-between">
+        <p>{text}</p>
+
+        <div className="flex items-center">
+          { !isNotesInArchive ?
+          <button className="m-1" onClick={() => onImportantClick(id)}>
+            <span
+              className={
+                isNotesInImportant ? "material-icons" : "material-icons-outlined"
+              }
+            >
+              star_rate
+            </span>
+          </button> : <></>}
+
+          {!isNotesInImportant && (
+            <button className="m-1" onClick={() => onArchiveClick(id)}>
+              <span
+                className={
+                  isNotesInArchive ? "material-icons" : "material-icons-outlined"
+                }
+              >
+                archive
+              </span>
+            </button>
+          )}
+
           <button className="m-1">
             <span className="material-icons-outlined">delete_outline</span>
           </button>
@@ -53,4 +81,5 @@ function ShowNotes({ title, text, id, isPinned }) {
     </div>
   );
 }
+
 export default ShowNotes;

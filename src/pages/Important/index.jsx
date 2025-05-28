@@ -3,8 +3,8 @@ import ShowNotes from "../../components/ShowNotes";
 import Sidebar from "../../components/Sidebar";
 import { useNotes } from "../../context/notes-context";
 
-function Archive() {
-  const { archive } = useNotes();
+function Important() {
+  const { important } = useNotes();
 
   return (
     <>
@@ -13,8 +13,8 @@ function Archive() {
         <Sidebar />
         <div className="">
           <div>
-            {archive?.length > 0 &&
-              archive.map(({ id, title, text, isPinned }) => (
+            {important?.length > 0 &&
+              important.map(({ id, title, text, isPinned }) => (
                 <ShowNotes
                   key={id}
                   id={id}
@@ -29,4 +29,4 @@ function Archive() {
     </>
   );
 }
-export default Archive;
+export default Important;

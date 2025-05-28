@@ -13,12 +13,12 @@ const Sidebar = () => {
       <NavLink className={getStyle} to="/">
         <span className="material-icons-outlined">home</span>Home
       </NavLink>
+      <NavLink className={getStyle} to="/important">
+        <span class="material-icons-outlined">star_rate</span>
+        Important
+      </NavLink>
       <NavLink className={getStyle} to="/archive">
         <span className="material-icons-outlined">archive</span>Archive
-      </NavLink>
-      <NavLink className={getStyle} to="/important">
-        <span className="material-icons-outlined">label_important</span>
-        Important
       </NavLink>
       <NavLink className={getStyle} to="/bin">
         <span className="material-icons-outlined">delete</span>Delete{" "}

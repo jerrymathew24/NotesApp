@@ -13,9 +13,10 @@ const NotesProvider = ({ children }) => {
     text: "",
     notes: [],
     archive: [],
+    important: [],
   };
 
-  const [{ title, text, notes, archive }, notesDispatch] = useReducer(
+  const [{ title, text, notes, archive, important }, notesDispatch] = useReducer(
     notesReducer,
     initialState
   );
@@ -24,7 +25,7 @@ const NotesProvider = ({ children }) => {
   console.log(notes, 'notes');
   
     return(
-        <NotesContext.Provider value={{ title, text, notes, archive, notesDispatch }}>
+        <NotesContext.Provider value={{ title, text, notes, archive, important, notesDispatch }}>
             {children}
         </NotesContext.Provider>
     )

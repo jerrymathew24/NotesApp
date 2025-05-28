@@ -56,6 +56,18 @@ const notesReducer = (state, action) => {
           notes: [...state.notes, state.archive.find(({id}) => id === action.payload.id)],
           archive: state.archive.filter(({id}) => id !== action.payload.id)
         }
+    case "ADD_TO_IMPORTANT":
+      return {
+        ...state,
+        important: [...state.important, state.notes.find(({id}) => id === action.payload.id)],
+        notes: state.notes.filter(({id}) => id !== action.payload.id)
+      }
+    case "REMOVE_FROM_IMPORTANT":
+      return {
+        ...state,
+        notes: [...state.notes, state.important.find(({id}) => id === action.payload.id)],
+        important: state.important.filter(({id}) => id !== action.payload.id)
+      }
     default:
       return state;
   }
