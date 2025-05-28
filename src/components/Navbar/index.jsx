@@ -1,4 +1,3 @@
-import logo from '../../assets/logo.jpg'
 import logoo from '../../assets/logoo.png'
 
 

@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import ShowNotes from "../../components/ShowNotes";
 import Sidebar from "../../components/Sidebar";
@@ -7,9 +8,9 @@ function Important() {
   const { important } = useNotes();
 
   return (
-    <>
+   < div className="flex flex-col h-screen">
       <Navbar />
-      <main className="flex gap-4">
+      <main className="flex flex-1 gap-4 overflow-y-auto">
         <Sidebar />
         <div className="">
           <div>
@@ -26,7 +27,8 @@ function Important() {
           </div>
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
 export default Important;

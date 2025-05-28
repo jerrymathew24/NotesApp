@@ -20,11 +20,10 @@ const Text = () => {
     notes?.length > 0 && notes.filter(({ isPinned }) => isPinned);
   const otherNotes =
     notes?.length > 0 && notes.filter(({ isPinned }) => !isPinned);
-  
 
   return (
-    <div className="flex flex-col justify-center w-screen mt-7">
-      <div className="flex flex-col self-center w-[600px] relative border-1 border-gray-500 rounded-md p-5 mt-5">
+    <div className="flex flex-col justify-start w-full mt-7 px-4">
+      <div className="flex flex-col self-center w-[350px] relative border-1 border-gray-500 rounded-md p-5 mt-5">
         <input
           value={title}
           onChange={onTitleChange}
