@@ -3,6 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import Text from "../../components/Text";
 
 const Home = () => {
+  
   return (
     <>
       <Navbar />

@@ -14,14 +14,14 @@ const Sidebar = () => {
         <span className="material-icons-outlined">home</span>Home
       </NavLink>
       <NavLink className={getStyle} to="/important">
-        <span class="material-icons-outlined">star_rate</span>
+        <span className="material-icons-outlined">star_rate</span>
         Important
       </NavLink>
       <NavLink className={getStyle} to="/archive">
         <span className="material-icons-outlined">archive</span>Archive
       </NavLink>
       <NavLink className={getStyle} to="/bin">
-        <span className="material-icons-outlined">delete</span>Delete{" "}
+        <span className="material-icons-outlined">delete</span>Bin
       </NavLink>
     </aside>
   );

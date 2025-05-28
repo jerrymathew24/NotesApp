@@ -1,12 +1,14 @@
 import { useNotes } from "../../context/notes-context";
 import { findNotesInArchive } from "../../utils/findNotesInArchive";
+import { findNotesInBin } from "../../utils/findNotesInBin";
 import { findNotesInImportant } from "../../utils/findNotesInImportant";
 
 function ShowNotes({ title, text, id, isPinned }) {
-  const { notesDispatch, archive, important } = useNotes();
+  const { notesDispatch, archive, important, bin } = useNotes();
 
   const isNotesInArchive = findNotesInArchive(archive, id);
   const isNotesInImportant = findNotesInImportant(important, id);
+  const isNotesInBin = findNotesInBin(bin, id);
 
   const onPinClick = (id) => {
     !isPinned
@@ -26,6 +28,14 @@ function ShowNotes({ title, text, id, isPinned }) {
       : notesDispatch({ type: "REMOVE_FROM_IMPORTANT", payload: { id } });
   };
 
+  const onBinClick = (id) => {
+    notesDispatch({ type: "ADD_TO_BIN", payload: { id } });
+  };
+
+  const onDeleteClick = (id) => {
+    notesDispatch({ type: "DELETE_FROM_BIN", payload: { id } });
+  };
+
   return (
     <div
       key={id}
@@ -33,7 +43,7 @@ function ShowNotes({ title, text, id, isPinned }) {
     >
       <div className="flex justify-between">
         <span className="text-xl font-bold">{title}</span>
-        {!isNotesInArchive && !isNotesInImportant ? (
+        {!isNotesInArchive && !isNotesInImportant && !isNotesInBin ? (
           <button className="m-1" onClick={() => onPinClick(id)}>
             <span
               className={
@@ -50,32 +60,51 @@ function ShowNotes({ title, text, id, isPinned }) {
         <p>{text}</p>
 
         <div className="flex items-center">
-          { !isNotesInArchive ?
-          <button className="m-1" onClick={() => onImportantClick(id)}>
-            <span
-              className={
-                isNotesInImportant ? "material-icons" : "material-icons-outlined"
-              }
-            >
-              star_rate
-            </span>
-          </button> : <></>}
+          {!isNotesInArchive && !isNotesInBin ? (
+            <button className="m-1" onClick={() => onImportantClick(id)}>
+              <span
+                className={
+                  isNotesInImportant
+                    ? "material-icons"
+                    : "material-icons-outlined"
+                }
+              >
+                star_rate
+              </span>
+            </button>
+          ) : (
+            <></>
+          )}
 
-          {!isNotesInImportant && (
+          {!isNotesInImportant && !isNotesInBin ? (
             <button className="m-1" onClick={() => onArchiveClick(id)}>
               <span
                 className={
-                  isNotesInArchive ? "material-icons" : "material-icons-outlined"
+                  isNotesInArchive
+                    ? "material-icons"
+                    : "material-icons-outlined"
                 }
               >
                 archive
               </span>
             </button>
+          ) : (
+            <></>
           )}
-
-          <button className="m-1">
-            <span className="material-icons-outlined">delete_outline</span>
-          </button>
+          {!isNotesInBin  ? (
+            <button className="m-1" onClick={() => onBinClick(id)}>
+              <span className="material-icons-outlined">delete_outline</span>
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={() => onDeleteClick(id)}
+                className="bg-red-500 text-white p-2 rounded-md absolute bottom-5 right-5"
+              >
+                Delete
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

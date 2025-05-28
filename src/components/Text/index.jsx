@@ -2,7 +2,7 @@ import ShowNotes from "../ShowNotes";
 import { useNotes } from "../../context/notes-context";
 
 const Text = () => {
-  const { title, text, notes, important, notesDispatch } = useNotes();
+  const { title, text, notes, notesDispatch } = useNotes();
   const onTitleChange = (e) => {
     notesDispatch({ type: "TITLE", payload: e.target.value });
   };
@@ -20,9 +20,6 @@ const Text = () => {
     notes?.length > 0 && notes.filter(({ isPinned }) => isPinned);
   const otherNotes =
     notes?.length > 0 && notes.filter(({ isPinned }) => !isPinned);
-
-  console.log(notes, "notes");
-  console.log(important, "important");
   
 
   return (
